@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build sgnOS image
 
 on:
   push:
@@ -21,7 +21,5 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Build  🔧
         shell: 'script -q -e -c "bash {0}"'
-        run: |
-          source .envrc
-          cos-build $FLAVOR
+        run: docker build -t sgnOS:0.1 . 
     
