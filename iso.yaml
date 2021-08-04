@@ -1,0 +1,25 @@
+packages:
+  rootfs:
+  - system/sgnOS
+  uefi:
+  - live/systemd-boot
+  - live/boot
+  isoimage:
+  - live/syslinux
+  - live/boot
+
+initramfs:
+  kernel_file: "vmlinuz"
+  rootfs_file: "initrd"
+
+image_prefix: "sgnOS-0."
+image_date: false
+label: "COS_LIVE"
+
+luet:
+  repositories:
+  - name: cOS
+    enable: true
+    urls:
+      - quay.io/costoolkit/releases-blue
+    type: docker

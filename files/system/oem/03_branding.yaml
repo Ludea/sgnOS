@@ -1,0 +1,23 @@
+name: "Branding"
+stages:
+   initramfs:
+     - name: "Branding"
+       hostname: "sgnOS"
+       files:
+        - path: /etc/issue
+          content: |
+                          _____ ___   
+	                 (  _  )  _ \ 
+	  ___   __   ___ | ( ) | (_(_)
+	/  __)/ _  \  _  \ | | |\__ \ 
+	\__  \ (_) | ( ) | (_) | )_) |
+	(____/\__  |_) (_)_____)\____)
+	     ( )_) |                  
+	      \___/                   
+
+            Welcome to \S !
+            IP address \4
+            Start the installer with "cos-installer <device>" to install it in the local system
+          permissions: 0644
+          owner: 0
+          group: 0

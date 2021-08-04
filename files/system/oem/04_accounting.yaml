@@ -1,0 +1,9 @@
+name: "Default user"
+stages:
+   initramfs:
+     - name: "Setup users"
+       ensure_entities:
+       - entity: |
+            kind: "shadow"
+            username: "sgn"
+            password: "sgn"
