@@ -20,4 +20,6 @@ jobs:
       - name: Build  🔧
         shell: 'script -q -e -c "bash {0}"'
         run: docker build -t sgnos:0.1 . 
-    
+      - name: Build iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -ti --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos:0.1
+
