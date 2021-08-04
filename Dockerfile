@@ -22,6 +22,7 @@ RUN dnf install -y \
     dracut-live \
     efibootmgr \
     audit \
+    kernel \
     systemd \
     parted \
     dracut \
@@ -50,3 +51,9 @@ RUN luet install -y \
 
 COPY files/ /
 RUN dracut --regenerate-all -f
+RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
+    ln -sf "${kernel#/boot/}" /boot/vmlinuz
+
+RUN kernel=$(ls /lib/modules | head -n1) && \
+    cd /boot && \
+    ln -sf "initrd-${kernel}" initrd
