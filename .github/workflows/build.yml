@@ -9,8 +9,6 @@ on:
 jobs:
   docker-build-blue:
     runs-on: ubuntu-latest
-    env:
-      FLAVOR: blue
     steps: 
       - uses: actions/checkout@v2
       - run: |
@@ -21,5 +19,5 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Build  🔧
         shell: 'script -q -e -c "bash {0}"'
-        run: docker build -t sgnOS:0.1 . 
+        run: docker build -t sgnos:0.1 . 
     
