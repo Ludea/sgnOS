@@ -56,4 +56,4 @@ RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
 
 RUN kernel=$(ls /lib/modules | head -n1) && \
     cd /boot && \
-    ln -sf "initrd-${kernel}" initrd
+    ln -sf *.img initrd
