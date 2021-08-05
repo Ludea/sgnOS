@@ -20,3 +20,8 @@ jobs:
         run: docker build -t sgnos:0.1 . 
       - name: Build iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos:0.1
+      - name: upload iso
+      uses: actions/upload-artifact@v2
+      with:
+        name: sgnos-0.1.iso
+        path: ./
