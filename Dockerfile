@@ -40,12 +40,7 @@ RUN dnf install -y \
     rsync 
 
 RUN luet install -y \
-    toolchain/yip \
-    utils/installer \
-    system/cos-setup \
-    system/immutable-rootfs \
-    system/grub-config \
-    system/cloud-config \
+    meta/cos-minimal \
     utils/k9s \
     utils/nerdctl
 
