@@ -21,6 +21,7 @@ jobs:
       - name: Build iso
         run: |
           docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos:${GITHUB_REF##*/}
+          mkdir build
           mv *.iso build/
           mv *.sha256 build/
       - name: upload iso
