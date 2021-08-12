@@ -17,11 +17,14 @@ jobs:
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Build  🔧
-        run: docker build -t sgnos:0.1 . 
+        run: docker build -t sgnos:${{github.ref}} . 
       - name: Build iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos:0.1
+        run: |
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos:${{github.ref}}
+          mv *.iso build/
+          mv *.sha256 build/
       - name: upload iso
-        uses: actions/upload-artifact@v2
-        with:
-          name: sgnos-0.1.iso
-          path: ./
+        uses: fnkr/github-action-ghr@v1
+        env:
+          GHR_PATH: build/
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
