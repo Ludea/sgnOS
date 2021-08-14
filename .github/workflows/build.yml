@@ -19,10 +19,10 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Build master  🔧
         run: docker build --target master -t sgnos_k3s-master . 
-      - name: Build iso
+      - name: Build master iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-master
       - name: Build agent  🔧
         run: docker build --target agent -t sgnos_k3s-agent . 
-      - name: Build iso
+      - name: Build agent iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-agent
 
