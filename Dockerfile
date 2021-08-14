@@ -59,7 +59,7 @@ RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
 RUN rm -rf installer.sh
 COPY k3s/master.yaml /
 
-FROM base as worker
+FROM base as agent
 RUN curl -sfL https://get.k3s.io > installer.sh
 RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh agent
 RUN rm -rf installer.sh
