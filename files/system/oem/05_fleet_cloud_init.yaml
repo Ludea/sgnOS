@@ -65,20 +65,10 @@ stages:
      - commands:
        - cp -rf /etc/sysconfig/network/ifcfg-eth0 /etc/sysconfig/network/ifcfg-eth1
        - systemctl restart network
-     - name: "Setup k3s"
+     - name: "Setup k3s ans os update "
        if: '[ -z "$(blkid -L COS_SYSTEM || true)" ]'
-       directories:
-       - path: "/usr/local/bin"
-         permissions: 0755
-         owner: 0
-         group: 0
        commands:
        - |
-            curl -sfL https://get.k3s.io | \
-            INSTALL_K3S_VERSION="v1.20.4+k3s1" \
-            INSTALL_K3S_EXEC="--tls-san {{.Values.node.hostname}}" \
-            INSTALL_K3S_SELINUX_WARN="true" \
-            sh -
             # Install fleet 
             kubectl apply -f /etc/k3s/manifests/fleet-config.yaml
             # Install system-upgrade-controller
