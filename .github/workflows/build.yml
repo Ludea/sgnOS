@@ -17,8 +17,12 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: Build  🔧
-        run: docker build -t sgnos:0.1 . 
+      - name: Build master  🔧
+        run: docker build --target master -t sgnos_k3s-master:0.1 . 
       - name: Build iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos:0.1
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-master
+      - name: Build agent  🔧
+        run: docker build --target agent -t sgnos_k3s-agent:0.1 . 
+      - name: Build iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-agent
 
