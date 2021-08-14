@@ -2,7 +2,7 @@ ARG LUET_VERSION=0.17.8
 
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
-FROM fedora:34
+FROM fedora:34 as base 
 ARG ARCH=amd64
 ENV ARCH=${ARCH}
 ENV LUET_NOLOCK=true
@@ -52,3 +52,15 @@ RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
 RUN kernel=$(ls /lib/modules | head -n1) && \
     cd /boot && \
     ln -sf *.img initrd
+
+FROM base as master
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
+RUN rm -rf installer.sh
+COPY k3s/server.yaml /
+
+FROM base as worker
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh agent
+RUN rm -rf installer.sh
+COPY k3s/agent.yaml /
