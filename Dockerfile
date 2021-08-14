@@ -57,7 +57,7 @@ FROM base as master
 RUN curl -sfL https://get.k3s.io > installer.sh
 RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
 RUN rm -rf installer.sh
-COPY k3s/server.yaml /
+COPY k3s/master.yaml /
 
 FROM base as worker
 RUN curl -sfL https://get.k3s.io > installer.sh
