@@ -6,3 +6,4 @@ stages:
         sgn:
           passwd: "sgn"
           shell: /bin/bash
+          homedir: "/home/sgn"
