@@ -22,8 +22,8 @@ jobs:
         run: docker build --target agent -t sgnos_k3s-agent:${GITHUB_REF##*/} .  
       - name: Build iso
         run: |
-          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-master:${GITHUB_REF##*/}
-          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-agent:${GITHUB_REF##*/}
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s-master:${GITHUB_REF##*/}
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s-agent:${GITHUB_REF##*/}
           mkdir build
           mv *.iso build/
           mv *.sha256 build/
