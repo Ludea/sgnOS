@@ -25,7 +25,7 @@ stages:
           group: 0
      - name: "Setting"
        if: '[ -z "$(blkid -L COS_SYSTEM || true)" ]'
-       hostname: "fleet-master"
+       hostname: "localhost"
        commands:
        - |
           target=/usr/local/.cos-state
