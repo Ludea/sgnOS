@@ -12,7 +12,7 @@ initramfs:
   kernel_file: "vmlinuz"
   rootfs_file: "initrd"
 
-image_prefix: "sgnOS"
+image_prefix: "sgnOS_k3s-master"
 image_date: false
 label: "COS_LIVE"
 
