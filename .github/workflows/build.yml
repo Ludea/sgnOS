@@ -20,9 +20,9 @@ jobs:
       - name: Build master  🔧
         run: docker build --target master -t sgnos_k3s-master . 
       - name: Build master iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-master
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s-master
       - name: Build agent  🔧
         run: docker build --target agent -t sgnos_k3s-agent . 
       - name: Build agent iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso.yaml --image sgnos_k3s-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s-agent
 
