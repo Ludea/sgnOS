@@ -37,7 +37,7 @@ RUN dnf install -y \
     tar \
     rsync
 
-RUN if [ TARGETARCH == "amd64"]; then dnf install-y grub2-pc grub2-efi-x64 grub2-efi-x64-modules; fi
+RUN if [ TARGETARCH == "amd64" ]; then dnf install -y grub2-pc grub2-efi-x64 grub2-efi-x64-modules; fi
 
 RUN luet install -y \
     meta/cos-minimal \
