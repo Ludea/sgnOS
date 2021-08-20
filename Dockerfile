@@ -3,7 +3,8 @@ ARG LUET_VERSION=0.17.8
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM fedora:34 as base 
-ARG ARCH=amd64
+ARG ARCH=amd6
+ARG TARGETARCH
 ENV ARCH=${ARCH}
 ENV LUET_NOLOCK=true
 
@@ -14,9 +15,6 @@ COPY conf/luet.yaml /etc/luet/luet.yaml
 COPY --from=luet /usr/bin/luet /usr/bin/luet
 
 RUN dnf install -y \
-    grub2-pc \
-    grub2-efi-x64 \
-    grub2-efi-x64-modules \
     NetworkManager \
     squashfs-tools \ 
     dracut-live \
@@ -37,7 +35,9 @@ RUN dnf install -y \
     gawk \
     haveged \
     tar \
-    rsync 
+    rsync
+
+RUN if [ TARGETARCH == "amd64"]; then dnf install-y grub2-pc grub2-efi-x64 grub2-efi-x64-modules; fi
 
 RUN luet install -y \
     meta/cos-minimal \
