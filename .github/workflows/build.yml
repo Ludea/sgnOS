@@ -19,18 +19,45 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build master
+      - name: Build master-amd64
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: false
-          tags: sgnos_k3s-master
-          target: master
-      - name: Build master iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s-master
-      - name: Build agent 🔧
-        run: docker build --target agent -t sgnos_k3s-agent . 
+          tags: sgnos_k3s_amd64-master
+          target: master-amd64
+      - name: Build master amd64 iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s_amd64-master
+      - name: Build agent-amd64 🔧
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64
+          push: false
+          tags: sgnos_k3s_amd64-agent
+          target: agent-amd64 
       - name: Build agent iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s_amd64-agent
+      - name: Build master-aarch64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/arm64
+          push: false
+          tags: sgnos_k3s_aarch64-master
+          target: master-aarch64
+      - name: Build master aarch64 iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s_aarch64-master
+      - name: Build agent-aarch64 🔧
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/arm64
+          push: false
+          tags: sgnos_k3s_aarch64-agent
+          target: agent-aarch64 
+      - name: Build agent-aarch64 iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s_aarch64-agent
 
+ 
