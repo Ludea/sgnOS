@@ -3,7 +3,6 @@ ARG LUET_VERSION=0.17.8
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM fedora:34 as base 
-ARG ARCH=amd6
 ARG TARGETARCH
 ENV ARCH=${ARCH}
 ENV LUET_NOLOCK=true
@@ -37,8 +36,6 @@ RUN dnf install -y \
     tar \
     rsync
 
-RUN if [[ TARGETARCH == "amd64" ]]; then dnf install -y grub2-pc grub2-efi-x64 grub2-efi-x64-modules; fi
-
 RUN luet install -y \
     meta/cos-minimal \
     utils/k9s \
@@ -53,13 +50,31 @@ RUN kernel=$(ls /lib/modules | head -n1) && \
     cd /boot && \
     ln -sf *.img initrd
 
-FROM base as master
+FROM base as base-amd64
+RUN dnf install -y \ 
+         grub2-pc \
+         grub2-efi-x64 \
+         grub2-efi-x64-modules
+
+FROM base-amd64 as master-amd64
 RUN curl -sfL https://get.k3s.io > installer.sh
 RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
 RUN rm -rf installer.sh
 COPY k3s/master.yaml /
 
-FROM base as agent
+FROM base-amd64 as agent-amd64
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh agent
+RUN rm -rf installer.sh
+COPY k3s/agent.yaml /
+
+FROM base as master-aarch64
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
+RUN rm -rf installer.sh
+COPY k3s/master.yaml /
+
+FROM base as agent-aarch64
 RUN curl -sfL https://get.k3s.io > installer.sh
 RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh agent
 RUN rm -rf installer.sh
