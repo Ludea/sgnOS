@@ -25,39 +25,39 @@ jobs:
           context: .
           platforms: linux/amd64
           push: false
-          tags: sgnos_k3s_amd64-master
+          tags: sgnos_amd64_k3s-master
           target: master-amd64
       - name: Build master amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s_amd64-master
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master
       - name: Build agent-amd64 🔧
         uses: docker/build-push-action@v2
         with:
           context: .
           platforms: linux/amd64
           push: false
-          tags: sgnos_k3s_amd64-agent
+          tags: sgnos_amd64_k3s-agent
           target: agent-amd64 
       - name: Build agent iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s_amd64-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_amd64_k3s-agent
       - name: Build master-aarch64
         uses: docker/build-push-action@v2
         with:
           context: .
           platforms: linux/arm64
           push: false
-          tags: sgnos_k3s_aarch64-master
+          tags: sgnos_aarch64_k3s-master
           target: master-aarch64
       - name: Build master aarch64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s_aarch64-master
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_aarch64_k3s-master
       - name: Build agent-aarch64 🔧
         uses: docker/build-push-action@v2
         with:
           context: .
           platforms: linux/arm64
           push: false
-          tags: sgnos_k3s_aarch64-agent
+          tags: sgnos_aarch64_k3s-agent
           target: agent-aarch64 
       - name: Build agent-aarch64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s_aarch64-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_aarch64_k3s-agent
 
  
