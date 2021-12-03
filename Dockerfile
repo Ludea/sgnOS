@@ -4,12 +4,6 @@ FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM fedora:35 as base 
 
-# Copy the luet config file pointing to the upgrade repository
-COPY conf/luet.yaml /etc/luet/luet.yaml
-
-# Copy luet from the official images
-COPY --from=luet /usr/bin/luet /usr/bin/luet
-
 RUN dnf install -y \
     NetworkManager \
     squashfs-tools \ 
@@ -32,6 +26,13 @@ RUN dnf install -y \
     haveged \
     tar \
     rsync
+
+# Copy the luet config file pointing to the upgrade repository
+COPY conf/luet.yaml /etc/luet/luet.yaml
+RUN curl -L https://github.com/mudler/luet/releases/download/0.20.10/luet-0.20.10-linux-arm64 --output /usr/bin/luet
+
+RUN chmod +x /usr/bin/luet
+RUN luet install -y meta/cos-verify
 
 RUN luet install -y \
     meta/cos-minimal \
