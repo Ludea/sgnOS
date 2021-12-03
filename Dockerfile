@@ -3,9 +3,6 @@ ARG LUET_VERSION=0.20.10
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM fedora:35 as base 
-ARG TARGETARCH
-ENV ARCH=${ARCH}
-ENV LUET_NOLOCK=true
 
 # Copy the luet config file pointing to the upgrade repository
 COPY conf/luet.yaml /etc/luet/luet.yaml
