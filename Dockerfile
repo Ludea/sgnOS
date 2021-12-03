@@ -2,7 +2,7 @@ ARG LUET_VERSION=0.17.8
 
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
-FROM fedora:34 as base 
+FROM fedora:35 as base 
 ARG TARGETARCH
 ENV ARCH=${ARCH}
 ENV LUET_NOLOCK=true
