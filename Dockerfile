@@ -4,6 +4,9 @@ FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM fedora:35 as base 
 
+ENV COSIGN_EXPERIMENTAL=1
+ENV COSIGN_REPOSITORY=raccos/releases-blue
+
 RUN dnf install -y \
     NetworkManager \
     squashfs-tools \ 
