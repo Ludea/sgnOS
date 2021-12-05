@@ -47,7 +47,7 @@ jobs:
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build master-amd64
+      - name: Build agent-amd64
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -56,7 +56,7 @@ jobs:
           tags: sgnos_amd64_k3s-agent:latest
           build-args: |
             NODE=agent
-      - name: Build master amd64 iso
+      - name: Build agent amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest
 
   build-arm64-master:
