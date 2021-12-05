@@ -110,7 +110,10 @@ jobs:
           build-args: |
             NODE=agent
             ARCH=arm64
-      - name: Build agent-aarch64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/{NODE}.yaml --image sgnos_aarch64_k3s-agent
-
+      - name: Build Image
+        id: build_image
+        run: |
+          mkdir build
+          sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnOs_Rpi:latest sgnOS_Rpi.img
+   
  
