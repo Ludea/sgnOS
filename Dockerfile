@@ -5,6 +5,7 @@ FROM quay.io/luet/base:$LUET_VERSION AS luet
 FROM fedora:35 as base 
 
 ARG ARCH=amd64
+Arg NODE=
 ENV COSIGN_EXPERIMENTAL=1
 ENV COSIGN_REPOSITORY=raccos/releases-blue
 
@@ -44,6 +45,12 @@ RUN luet install -y \
     utils/nerdctl
 
 COPY files/ /
+
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh ${NODE}
+RUN rm -rf installer.sh
+COPY k3s/${NODE}.yaml /
+
 RUN dracut --regenerate-all -f
 RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
     ln -sf "${kernel#/boot/}" /boot/vmlinuz
@@ -52,32 +59,8 @@ RUN kernel=$(ls /lib/modules | head -n1) && \
     cd /boot && \
     ln -sf *.img initrd
 
-FROM base as base-amd64
+FROM base as k3s-amd64
 RUN dnf install -y \ 
          grub2-pc \
          grub2-efi-x64 \
          grub2-efi-x64-modules
-
-FROM base-amd64 as master-amd64
-RUN curl -sfL https://get.k3s.io > installer.sh
-RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
-RUN rm -rf installer.sh
-COPY k3s/master.yaml /
-
-FROM base-amd64 as agent-amd64
-RUN curl -sfL https://get.k3s.io > installer.sh
-RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh agent
-RUN rm -rf installer.sh
-COPY k3s/agent.yaml /
-
-FROM base as master-aarch64
-RUN curl -sfL https://get.k3s.io > installer.sh
-RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
-RUN rm -rf installer.sh
-COPY k3s/master.yaml /
-
-FROM base as agent-aarch64
-RUN curl -sfL https://get.k3s.io > installer.sh
-RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh agent
-RUN rm -rf installer.sh
-COPY k3s/agent.yaml /
