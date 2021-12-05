@@ -36,7 +36,7 @@ jobs:
       - name: Build master amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest
     build-arm64-master:
-     - name: Build master-aarch64
+      - name: Build master-aarch64
         uses: docker/build-push-action@v2
         with:
           context: .
