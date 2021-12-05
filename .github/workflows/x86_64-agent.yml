@@ -1,4 +1,4 @@
-name: Build sgnOS amd master image
+name: Build sgnOS amd64 agent image
 
 on:
   push:
