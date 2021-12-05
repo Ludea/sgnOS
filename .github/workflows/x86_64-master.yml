@@ -9,8 +9,8 @@ on:
 concurrency: 
   group: ${{ github.head_ref }} 
 
- jobs:
-  build-am64-master:
+jobs:
+  build:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
