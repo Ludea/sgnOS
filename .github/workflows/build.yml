@@ -80,6 +80,9 @@ jobs:
           platforms: linux/arm64
           push: false
           tags: sgnos_aarch64_k3s-master
+          build-args: |
+            NODE=master
+            ARCH=arm64
       - name: Build master aarch64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/${NODE}.yaml --image sgnos_aarch64_k3s-master
  
@@ -104,6 +107,9 @@ jobs:
           platforms: linux/arm64
           push: false
           tags: sgnos_aarch64_k3s-agent
+          build-args: |
+            NODE=agent
+            ARCH=arm64
       - name: Build agent-aarch64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/{NODE}.yaml --image sgnos_aarch64_k3s-agent
 
