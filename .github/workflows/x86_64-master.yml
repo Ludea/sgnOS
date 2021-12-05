@@ -37,6 +37,7 @@ jobs:
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest
  
   build-arm64-master:
+    runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
       - run: |
@@ -59,7 +60,9 @@ jobs:
           target: master-aarch64
       - name: Build master aarch64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/${NODE}.yaml --image sgnos_aarch64_k3s-master
-  build-arm64-agent:
+ 
+ build-arm64-agent:
+    runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
       - run: |
