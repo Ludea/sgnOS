@@ -82,7 +82,7 @@ jobs:
           platforms: linux/arm64
           push: false
           tags: sgnos_aarch64_k3s-master
-          target: base-arm64
+          target: k3s-arm64
           build-args: |
             NODE=master
             ARCH=arm64
@@ -110,7 +110,7 @@ jobs:
           platforms: linux/arm64
           push: false
           tags: sgnos_aarch64_k3s-agent
-          target: base-arm64
+          target: k3s-arm64
           build-args: |
             NODE=agent
             ARCH=arm64
