@@ -67,4 +67,7 @@ RUN dnf install -y \
 
 FROM base as k3s-arm64
 RUN dnf install -y \ 
-         grub2-arm64-efi
+         grub2-arm64-efi \
+         raspberrypi-eeprom \
+         bcm43xx-firmware \
+         systemd-sysvinit \
