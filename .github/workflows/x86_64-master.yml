@@ -1,4 +1,4 @@
-name: Build sgnOS image
+name: Build sgnOS amd master image
 
 on:
   push:
