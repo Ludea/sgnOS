@@ -47,7 +47,7 @@ jobs:
       - name: Build master aarch64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/${NODE}.yaml --image sgnos_aarch64_k3s-master
     build-arm64-agent:
-     - name: Build agent-aarch64 🔧
+      - name: Build agent-aarch64 🔧
         uses: docker/build-push-action@v2
         with:
           context: .
