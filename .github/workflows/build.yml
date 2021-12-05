@@ -1,4 +1,4 @@
-name: "Build sgnOS amd64 master image"
+name: "Build sgnOS images"
 
 on:
   push:
@@ -28,6 +28,7 @@ jobs:
           platforms: linux/amd64
           push: false
           tags: sgnos_amd64_k3s-master:latest
+          target: k3s-amd64
           build-args: |
             NODE=master
       - name: Build master amd64 iso
@@ -54,6 +55,7 @@ jobs:
           platforms: linux/amd64
           push: false
           tags: sgnos_amd64_k3s-agent:latest
+          target: k3s-amd64
           build-args: |
             NODE=agent
       - name: Build agent amd64 iso
