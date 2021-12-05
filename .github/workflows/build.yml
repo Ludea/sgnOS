@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  docker-build-blue:
+  "Build am64 master":
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -32,7 +32,8 @@ jobs:
             NODE=master
       - name: Build master amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest
-      - name: Build agent-amd64 🔧
+   "Build amd64 agent":
+     - name: Build agent-amd64 🔧
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -42,7 +43,8 @@ jobs:
           target: agent-amd64 
       - name: Build agent iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/${NODE}.yaml --image sgnos_amd64_k3s-agent
-      - name: Build master-aarch64
+    "Build arm64 master":
+     - name: Build master-aarch64
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -52,7 +54,8 @@ jobs:
           target: master-aarch64
       - name: Build master aarch64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/${NODE}.yaml --image sgnos_aarch64_k3s-master
-      - name: Build agent-aarch64 🔧
+    "Build arm64 agent":
+     - name: Build agent-aarch64 🔧
         uses: docker/build-push-action@v2
         with:
           context: .
