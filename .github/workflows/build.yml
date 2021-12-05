@@ -5,6 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+concurrency: 
+  group: ${{ github.head_ref }} 
 
 jobs:
   build-am64-master:
