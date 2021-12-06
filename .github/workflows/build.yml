@@ -118,6 +118,6 @@ jobs:
         id: build_image
         run: |
           mkdir build
-          sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnOs_Rpi:latest sgnOS_Rpi.img
+          sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnos_aarch64_k3s-agent:latest sgnOS_rpi64.img
    
  
