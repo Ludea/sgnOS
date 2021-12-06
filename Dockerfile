@@ -5,7 +5,7 @@ FROM quay.io/luet/base:$LUET_VERSION AS luet
 FROM fedora:35 as base 
 
 ARG ARCH=amd64
-Arg NODE=
+ARG NODE=agent
 ENV COSIGN_EXPERIMENTAL=1
 ENV COSIGN_REPOSITORY=raccos/releases-blue
 
