@@ -6,7 +6,7 @@ on:
       - v*
 
 jobs:
-  release-iso:
+  release-iso-amd64-master:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -16,14 +16,59 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: Build master  🔧
-        run: docker build --target master -t sgnos_k3s-master:${GITHUB_REF##*/} . 
-      - name: Build agent  🔧
-        run: docker build --target agent -t sgnos_k3s-agent:${GITHUB_REF##*/} .  
-      - name: Build iso
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build master-amd64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64
+          push: false
+          tags: sgnos_amd64_k3s-master:latest
+          target: k3s-amd64
+          build-args: |
+            NODE=master
+      - name: Build master amd64 iso
         run: |
-          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_k3s-master:${GITHUB_REF##*/}
-          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_k3s-agent:${GITHUB_REF##*/}
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -ti --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master.iso 
+          mkdir build
+          mv *.iso build/
+          mv *.sha256 build/
+      - name: upload iso
+        uses: fnkr/github-action-ghr@v1
+        env:
+          GHR_PATH: build/
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-iso-amd64-agent:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+      - name: Release space from worker
+        run: |
+          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build master-amd64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64
+          push: false
+          tags: sgnos_amd64_k3s-agent:latest
+          target: k3s-amd64
+          build-args: |
+            NODE=agent
+      - name: Build agent amd64 iso
+        run: |
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -ti --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent.iso 
           mkdir build
           mv *.iso build/
           mv *.sha256 build/
