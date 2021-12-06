@@ -1,4 +1,4 @@
-name: "Build sgnOS images"
+name: Build sgnOS images
 
 on:
   push:
