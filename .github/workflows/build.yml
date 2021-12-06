@@ -92,7 +92,6 @@ jobs:
           mkdir build
           sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnos_aarch64_k3s-master:latest sgnOS_rpi64-master.img
    
- 
   build-arm64-agent:
     runs-on: ubuntu-latest
     steps: 
@@ -123,5 +122,3 @@ jobs:
         run: |
           mkdir build
           sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnos_aarch64_k3s-agent:latest sgnOS_rpi64-agent.img
-   
- 
