@@ -32,7 +32,7 @@ jobs:
             NODE=master
       - name: Build master amd64 iso
         run: |
-          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -ti --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master.iso 
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master.iso 
           mkdir build
           mv *.iso build/
           mv *.sha256 build/
@@ -68,7 +68,7 @@ jobs:
             NODE=agent
       - name: Build agent amd64 iso
         run: |
-          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -ti --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent.iso 
+          docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/agent.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent.iso 
           mkdir build
           mv *.iso build/
           mv *.sha256 build/
