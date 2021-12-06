@@ -67,5 +67,4 @@ RUN dnf install -y \
 
 FROM base as k3s-arm64
 RUN dnf install -y \ 
-         grub2-efi-aa64 \
-         linux-firmware
+         grub2-efi-aa64
