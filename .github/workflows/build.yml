@@ -65,7 +65,7 @@ jobs:
           build-args: |
             NODE=agent
       - name: Build agent amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnos_amd64_k3s-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_amd64_k3s-agent.iso
