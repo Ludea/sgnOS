@@ -96,7 +96,7 @@ jobs:
           platforms: linux/arm64
           push: false
           load: true
-          tags: sgnos_aarch64_k3s-master
+          tags: sgnos_aarch64_k3s-master:latest
           target: k3s-arm64
           build-args: |
             NODE=master
@@ -135,7 +135,7 @@ jobs:
           platforms: linux/arm64
           push: false
           load: true
-          tags: sgnos_aarch64_k3s-agent
+          tags: sgnos_aarch64_k3s-agent:latest
           target: k3s-arm64
           build-args: |
             NODE=agent
