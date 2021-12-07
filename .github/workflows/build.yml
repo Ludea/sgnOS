@@ -27,12 +27,14 @@ jobs:
           context: .
           platforms: linux/amd64
           push: false
-          tags: sgnos_amd64_k3s-master
+          tags: sgnos_amd64_k3s-master:latest
           target: k3s-amd64
           build-args: |
             NODE=master
+      - name: list image
+        run: docker image ls --all
       - name: Build master amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master --output sgnOS_amd64_k3s-master.iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master.iso
  
   build-amd64-agent:
     runs-on: ubuntu-latest
