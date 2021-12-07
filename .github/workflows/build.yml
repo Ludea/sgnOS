@@ -34,7 +34,11 @@ jobs:
             NODE=master
       - name: Build master amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master.iso
- 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_amd64_k3s-master.iso
+          path: sgnOS_amd64_k3s-master.iso
+
   build-amd64-agent:
     runs-on: ubuntu-latest
     steps: 
@@ -62,6 +66,10 @@ jobs:
             NODE=agent
       - name: Build agent amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnos_amd64_k3s-agent.iso
+            - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_amd64_k3s-agent.iso
+          path: sgnOS_amd64_k3s-agent.iso
 
   build-arm64-master:
     runs-on: ubuntu-latest
@@ -96,10 +104,12 @@ jobs:
       - name: Build Image
         id: build_image
         run: |
-          mkdir build
-          ls images
-          sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnos_aarch64_k3s-master:latest sgnOS_rpi64-master.img
-   
+          sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnos_aarch64_k3s-master:latest sgnOS_rpi64_k3s-master.img
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_rpi64_k3s-master.img
+          path: sgnOS_rpi64_k3s-master.img
+
   build-arm64-agent:
     runs-on: ubuntu-latest
     steps: 
@@ -135,3 +145,7 @@ jobs:
         run: |
           mkdir build
           sudo ./images/arm-img-builder.sh --model Rpi64 --docker-image sgnos_aarch64_k3s-agent:latest sgnOS_rpi64-agent.img
+            - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_rpi64_k3s-agent.img
+          path: sgnOS_rpi64_k3s-agent.img
