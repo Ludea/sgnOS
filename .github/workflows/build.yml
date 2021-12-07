@@ -97,7 +97,7 @@ jobs:
           push: false
           load: true
           tags: sgnos_aarch64_k3s-master:latest
-          target: k3s-arm64
+          target: base
           build-args: |
             NODE=master
             ARCH=arm64
@@ -136,7 +136,7 @@ jobs:
           push: false
           load: true
           tags: sgnos_aarch64_k3s-agent:latest
-          target: k3s-arm64
+          target: base
           build-args: |
             NODE=agent
             ARCH=arm64
