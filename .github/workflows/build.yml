@@ -32,7 +32,9 @@ jobs:
           build-args: |
             NODE=master
       - name: list image
-        run: docker image ls --all
+        run: |
+          docker image ls --all
+          docker container ls --all
       - name: Build master amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master.iso
  
