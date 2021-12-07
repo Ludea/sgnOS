@@ -27,6 +27,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: false
+          load: true
           tags: sgnos_amd64_k3s-master:latest
           target: k3s-amd64
           build-args: |
