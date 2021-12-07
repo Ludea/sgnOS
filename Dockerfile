@@ -64,7 +64,3 @@ RUN dnf install -y \
          grub2-pc \
          grub2-efi-x64 \
          grub2-efi-x64-modules
-
-FROM base as k3s-arm64
-RUN dnf install -y \ 
-         grub2-efi-aa64
