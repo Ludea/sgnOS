@@ -87,7 +87,7 @@ jobs:
           context: .
           platforms: linux/arm64
           push: false
-          load:true
+          load: true
           tags: sgnos_aarch64_k3s-master
           target: k3s-arm64
           build-args: |
