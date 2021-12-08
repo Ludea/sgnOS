@@ -103,6 +103,8 @@ jobs:
           build-args: |
             NODE=master
             ARCH=arm64
+      - name: list image
+        run: docker images -a
       - name: Build Image
         id: build_image
         run: |
@@ -143,6 +145,8 @@ jobs:
           build-args: |
             NODE=agent
             ARCH=arm64
+      - name: list image
+        run: docker images -a
       - name: Build Image
         id: build_image
         run: |
