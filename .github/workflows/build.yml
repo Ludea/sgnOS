@@ -38,6 +38,7 @@ jobs:
         with:
           name: sgnOS_amd64_k3s-master.iso
           path: sgnOS_amd64_k3s-master.iso
+          if-no-files-found: error
 
   build-amd64-agent:
     runs-on: ubuntu-latest
@@ -70,6 +71,7 @@ jobs:
         with:
           name: sgnOS_amd64_k3s-agent.iso
           path: sgnOS_amd64_k3s-agent.iso
+          if-no-files-found: error
 
   build-arm64-master:
     runs-on: ubuntu-latest
@@ -109,6 +111,7 @@ jobs:
         with:
           name: sgnOS_rpi64_k3s-master.img
           path: sgnOS_rpi64_k3s-master.img
+          if-no-files-found: error
 
   build-arm64-agent:
     runs-on: ubuntu-latest
@@ -144,8 +147,9 @@ jobs:
         id: build_image
         run: |
           mkdir build
-          sudo ./images/arm-img-builder.sh --model Rpi64 sgnOS_rpi64-agent.img
+          sudo ./images/arm-img-builder.sh --model Rpi64 sgnOS_rpi64_k3s-agent.img
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_rpi64_k3s-agent.img
           path: sgnOS_rpi64_k3s-agent.img
+          if-no-files-found: error
