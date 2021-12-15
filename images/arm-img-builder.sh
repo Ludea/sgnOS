@@ -199,7 +199,11 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [ "$model" == "rpi64" ]; then
-    container_image=${CONTAINER_IMAGE:-quay.io/costoolkit/examples:rpi-latest}
+    if [ -z "$CONTAINER_IMAGE" ] ; then
+      container_image=${CONTAINER_IMAGE:-quay.io/costoolkit/examples:rpi-latest}
+    else
+      container_image=${CONTAINER_IMAGE}
+    fi
 else
     # Odroid C2 image contains kernel-default-extra, might have broader support
     container_image=${CONTAINER_IMAGE:-quay.io/costoolkit/examples:odroid-c2-latest}
