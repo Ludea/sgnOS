@@ -106,8 +106,7 @@ jobs:
       - name: Build Image
         id: build_image
         run: |
-          sudo ./images/arm-img-builder.sh --model Rpi64 sgnOS_rpi64_k3s-master.img
-          sudo dd if=sgnOS_rpi64_k3s-master.img of=/dev/sdX bs=16M status=progress
+          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_aarch64_k3s-master:latest sgnOS_rpi64_k3s-master.img
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_rpi64_k3s-master.img
@@ -148,8 +147,7 @@ jobs:
         id: build_image
         run: |
           mkdir build
-          sudo ./images/arm-img-builder.sh --model Rpi64 sgnOS_rpi64_k3s-agent.img
-          sudo dd if=sgnOS_rpi64_k3s-agent.img of=/dev/sdX bs=16M status=progress
+          sudo ./images/arm-img-builder.sh --model rpi64 --docker-img sgnos_aarch64_k3s-agent:latest sgnOS_rpi64_k3s-agent.img
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_rpi64_k3s-agent.img
