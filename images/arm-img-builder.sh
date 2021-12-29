@@ -302,8 +302,14 @@ if [ -z "$directory" ]; then
   echo ">>> Downloading container image"
   luet util unpack $container_image $TARGET
 else
-  echo ">>> Copying files from $directory"
-  rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
+  if [ -z "$container_image" ]; then
+    echo ">>> Unpack local container image"
+    luet util unpack --local $container_image $TARGET
+    rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
+  else
+    echo ">>> Copying files from $directory"
+    rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
+  fi
 fi
 
 umount $TARGET
