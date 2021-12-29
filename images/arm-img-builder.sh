@@ -298,18 +298,14 @@ mount -t ext2 $LOOP $TARGET
 ensure_dir_structure $TARGET
 
 # Download the container image
-if [ -z "$directory" ]; then
+if [ -z "$directory" ] && [ -z "$CONTAINER_IMAGE" ]; then
   echo ">>> Downloading container image"
   luet util unpack $container_image $TARGET
 else
-  if [ -z "$container_image" ]; then
-    echo ">>> Unpack local container image"
-    luet util unpack --local $container_image $TARGET
-    rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
-  else
-    echo ">>> Copying files from $directory"
-    rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
-  fi
+  echo ">>> Unpack local container image"
+  luet util unpack --local $container_image $TARGET
+  echo ">>> Copying files from $directory"
+  rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
 fi
 
 umount $TARGET
