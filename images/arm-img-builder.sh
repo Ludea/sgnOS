@@ -303,7 +303,7 @@ if [ -z "$directory" ] && [ -z "$CONTAINER_IMAGE" ]; then
   luet util unpack $container_image $TARGET
 else
   echo ">>> Unpack local container image"
-  luet util unpack --local $container_image $TARGET
+  luet util unpack $container_image $TARGET --local
   echo ">>> Copying files from $directory"
   rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
 fi
