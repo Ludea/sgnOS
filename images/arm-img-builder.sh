@@ -305,7 +305,7 @@ else
   echo ">>> Unpack local container image"
   luet util unpack $container_image $TARGET --local
   echo ">>> Copying files from $directory"
-  rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
+ # rsync -axq --exclude='host' --exclude='mnt' --exclude='proc' --exclude='sys' --exclude='dev' --exclude='tmp' ${directory}/ $TARGET
 fi
 
 umount $TARGET
