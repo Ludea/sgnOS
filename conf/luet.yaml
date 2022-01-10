@@ -5,8 +5,8 @@ general:
    debug: false
    spinner_charset: 9
 repositories:
-- name: "cos"
-  description: "cOS official"
+- name: "sgnOS"
+  description: "SgnOS "
   type: "docker"
   enable: true
   cached: true
