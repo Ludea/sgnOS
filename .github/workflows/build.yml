@@ -109,7 +109,6 @@ jobs:
           target: base
           build-args: |
             NODE=master
-            ARCH=arm64
       - name: Build Image
         id: build_image
         run: |
@@ -149,7 +148,6 @@ jobs:
           target: base
           build-args: |
             NODE=agent
-            ARCH=arm64
       - name: Build Image
         id: build_image
         run: |
