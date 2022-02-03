@@ -24,7 +24,8 @@ jobs:
       - name: Build master-amd64
         uses: docker/build-push-action@v2
         with:
-          context: ./Dockerfile
+          context: .
+          file: Dockerfile
           platforms: linux/amd64
           push: false
           load: true
@@ -57,7 +58,8 @@ jobs:
       - name: Build master-amd64
         uses: docker/build-push-action@v2
         with:
-          context: ./Dockerfile.alpine
+          context: .
+          file: Dockerfile.alpine
           platforms: linux/amd64
           push: false
           load: true
