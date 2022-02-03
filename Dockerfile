@@ -4,7 +4,6 @@ FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM fedora:35 as base 
 
-ARG ARCH=amd64
 ARG NODE=agent
 ENV COSIGN_EXPERIMENTAL=1
 ENV COSIGN_REPOSITORY=raccos/releases-blue
@@ -34,15 +33,13 @@ RUN dnf install -y \
 
 # Copy the luet config file pointing to the upgrade repository
 COPY conf/luet.yaml /etc/luet/luet.yaml
-RUN curl -L https://github.com/mudler/luet/releases/download/0.20.10/luet-0.20.10-linux-${ARCH} --output /usr/bin/luet
 
-RUN chmod +x /usr/bin/luet
 RUN luet install -y meta/cos-verify
 
-RUN luet install -y \
-    meta/cos-minimal \
+RUN luet install --plugin luet-cosign -y \
+    meta/cos-core \
+    system/kernel \
     utils/k9s \
-    utils/nerdctl
 
 COPY files/ /
 
