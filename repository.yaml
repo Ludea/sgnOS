@@ -1,0 +1,10 @@
+repositories:
+- name: "sgnOS"
+  description: "sgnOS"
+  type: "docker"
+  enable: true
+  cached: true
+  priority: 1
+  verify: false
+  urls:
+  - "quay.io/costoolkit/releases-blue"
