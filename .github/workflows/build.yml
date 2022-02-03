@@ -64,7 +64,6 @@ jobs:
           push: false
           load: true
           tags: sgnos_alpine_amd64_k3s-master:latest
-          target: k3s-amd64
           build-args: |
             NODE=master
       - name: Build master amd64 iso
