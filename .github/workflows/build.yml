@@ -117,10 +117,6 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: install deps
-        run: |
-          sudo scripts/get_luet.sh
-          sudo luet install --no-spinner -y toolchain/yq
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -156,10 +152,6 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: install deps
-        run: |
-          sudo scripts/get_luet.sh
-          sudo luet install --no-spinner -y toolchain/yq
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
