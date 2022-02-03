@@ -118,7 +118,7 @@ RUN luet install --plugin luet-cosign -y \
        system/dracut-initrd \
 
 COPY files/ /
-COPY files-alpine/ /
+COPY alpine/ /
 
 RUN curl -sfL https://get.k3s.io > installer.sh
 RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh ${NODE}
