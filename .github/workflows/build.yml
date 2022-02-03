@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build sgnos_fedora_amd64-master:
+  build-sgnos_fedora_amd64-master:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
