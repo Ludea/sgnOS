@@ -37,9 +37,8 @@ COPY conf/luet.yaml /etc/luet/luet.yaml
 # Copy luet from the official images
 COPY --from=luet /usr/bin/luet /usr/bin/luet
 
-RUN luet install -y meta/cos-verify
-
 RUN luet install --plugin luet-cosign -y \
+    meta/cos-verify \
     meta/cos-core \
     utils/k9s 
 
