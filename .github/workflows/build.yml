@@ -10,10 +10,10 @@ jobs:
   build-amd64-master:
     runs-on: ubuntu-latest
     fail-fast: false
-      matrix:
-       include:
-         - flavor: "fedora"
-         - flavor: "alpine"
+    matrix:
+     include:
+       - flavor: "fedora"
+       - flavor: "alpine"
     steps: 
       - uses: actions/checkout@v2
       - run: |
