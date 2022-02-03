@@ -32,7 +32,7 @@ RUN dnf install -y \
     rsync
 
 # Copy the luet config file pointing to the upgrade repository
-COPY conf/luet.yaml /etc/luet/luet.yaml
+COPY repositories.yaml /etc/luet/luet.yaml
 
 # Copy luet from the official images
 COPY --from=luet /usr/bin/luet /usr/bin/luet
