@@ -41,7 +41,7 @@ RUN luet install -y meta/cos-verify
 
 RUN luet install --plugin luet-cosign -y \
     meta/cos-core \
-    utils/k9s \
+    utils/k9s 
 
 COPY files/ /
 
