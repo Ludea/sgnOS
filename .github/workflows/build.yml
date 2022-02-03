@@ -7,14 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build-amd64-master:
+  build sgnos_fedora_amd64-master:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-       include:
-         - flavor: "fedora"
-         - flavor: "alpine"
     steps: 
       - uses: actions/checkout@v2
       - run: |
@@ -30,21 +24,53 @@ jobs:
       - name: Build master-amd64
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: Dockerfile
           platforms: linux/amd64
           push: false
           load: true
-          tags: sgnos_amd64_k3s-${{ matrix.flavor}}-master:latest
+          tags: sgnos_fedora_amd64-master:latest
           target: k3s-amd64
           build-args: |
             NODE=master
-            FLAVOR= ${{ matrix.flavor }}
       - name: Build master amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_amd64_k3s-master:latest --output sgnOS_amd64_k3s-master
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_fedora_amd64_k3s-master:latest --output sgnOS_fedora_amd64_k3s-master
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_amd64_k3s-master.iso
-          path: sgnOS_amd64_k3s-master.iso
+          name: sgnOS_fedora_md64_k3s-master.iso
+          path: sgnOS_fedora_amd64_k3s-master.iso
+          if-no-files-found: error
+
+  build-alpine_amd64-master:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+      - name: Release space from worker
+        run: |
+          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build master-amd64
+        uses: docker/build-push-action@v2
+        with:
+          context: Dockerfile.alpine
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: sgnos_alpine_amd64_k3s-master:latest
+          target: k3s-amd64
+          build-args: |
+            NODE=master
+      - name: Build master amd64 iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_alpine_amd64_k3s-master:latest --output sgnOS_alpine_amd64_k3s-master
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_alpine_amd64_k3s-master.iso
+          path: sgnOS_alpine_amd64_k3s-master.iso
           if-no-files-found: error
 
   build-amd64-agent:
