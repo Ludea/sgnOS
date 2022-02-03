@@ -5,6 +5,7 @@ FROM quay.io/luet/base:$LUET_VERSION AS luet
 FROM $BASE_IMAGE
 ARG K3S_VERSION
 ARG C3OS_VERSION
+ARG NODE=agent
 
 # Enable cosign keyless verify
 ENV COSIGN_EXPERIMENTAL=1
