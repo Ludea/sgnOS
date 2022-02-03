@@ -119,6 +119,11 @@ RUN luet install --plugin luet-cosign -y \
 COPY files/ /
 COPY files-alpine/ /
 
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh ${NODE}
+RUN rm -rf installer.sh
+COPY k3s/${NODE}.yaml /
+
 RUN mkdir -p /etc/runlevels/default && \
       ln -sf /etc/init.d/cos-setup-boot /etc/runlevels/default/cos-setup-boot  && \
       ln -sf /etc/init.d/cos-setup-network /etc/runlevels/default/cos-setup-network  && \
