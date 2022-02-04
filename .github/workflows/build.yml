@@ -37,7 +37,7 @@ jobs:
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain ./iso/master.yaml --image sgnos_fedora_amd64_k3s-master:latest --output sgnOS_fedora_amd64_k3s-master
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_fedora_md64_k3s-master.iso
+          name: sgnOS_fedora_amd64_k3s-master.iso
           path: sgnOS_fedora_amd64_k3s-master.iso
           if-no-files-found: error
 
