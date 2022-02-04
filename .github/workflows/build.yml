@@ -29,7 +29,7 @@ jobs:
           platforms: linux/amd64
           push: false
           load: true
-          tags: sgnos_fedora_amd64-master:latest
+          tags: sgnos_fedora_amd64_k3s-master:latest
           target: k3s-amd64
           build-args: |
             NODE=master
