@@ -60,7 +60,7 @@ RUN envsubst >/etc/os-release </usr/lib/os-release.tmpl && \
 
 FROM base as k3s-amd64
 RUN apt install -y \
-           grub-pc-bin
+           grub-pc-bin \
            grub-efi-amd64-bin \
            grub2
 
