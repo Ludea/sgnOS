@@ -1,0 +1,61 @@
+ARG LUET_VERSION=0.22.7
+ARG BASE_IMAGE=aubuntu
+FROM quay.io/luet/base:$LUET_VERSION AS luet
+
+FROM $BASE_IMAGE
+ARG K3S_VERSION
+ARG C3OS_VERSION
+ARG NODE=agent
+
+# Enable cosign keyless verify
+ENV COSIGN_EXPERIMENTAL=1
+# Repo containing signatures
+ENV COSIGN_REPOSITORY=raccos/releases-green
+
+RUN apt install -y \
+         systemd \
+         grub-pc-bin \
+         grub-efi-amd64-bin \
+         grub2 \
+         grub2-common \
+         iproute2 \
+         squashfs-tools \
+         parted \
+         dracut \
+         dracut-live \
+         e2fsprogs \
+         dosfstools \
+         coreutils \
+         multipath-tools \
+         debianutils \
+         curl \
+         nano \
+         gawk \
+         haveged \
+         tar \
+         rsync
+
+# Copy the luet config file pointing to the upgrade repository
+COPY repositories.yaml /etc/luet/luet.yaml
+
+# Copy luet from the official images
+COPY --from=luet /usr/bin/luet /usr/bin/luet
+
+RUN luet install --plugin luet-cosign -y \
+       meta/cos-verify \
+       meta/cos-core \
+       utils/k9s \
+       system/kernel \
+       system/dracut-initrd
+
+COPY files/ /
+
+RUN curl -sfL https://get.k3s.io > installer.sh
+RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh ${NODE}
+RUN rm -rf installer.sh
+COPY k3s/${NODE}.yaml /
+
+RUN mkinitrd
+
+RUN envsubst >/etc/os-release </usr/lib/os-release.tmpl && \
+    rm /usr/lib/os-release.tmpl
