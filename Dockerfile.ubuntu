@@ -6,6 +6,8 @@ FROM $BASE_IMAGE as base
 ARG K3S_VERSION
 ARG C3OS_VERSION
 ARG NODE=agent
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Paris
 
 # Enable cosign keyless verify
 ENV COSIGN_EXPERIMENTAL=1
