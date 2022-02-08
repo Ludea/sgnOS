@@ -75,7 +75,7 @@ jobs:
           path: sgnOS_ubuntu_amd64_k3s-master.iso
           if-no-files-found: error
 
-  build-alpine_amd64-master:
+  build-alpine-amd64-master:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -213,4 +213,40 @@ jobs:
         with:
           name: sgnOS_rpi64_k3s-agent.img
           path: sgnOS_rpi64_k3s-agent.img
+          if-no-files-found: error
+
+  build-ubuntu-arm64-master:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+      - name: Release space from worker
+        run: |
+          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Build master-aarch64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile.ubuntu
+          platforms: linux/arm64
+          push: false
+          load: true
+          tags: sgnos_ubuntu-aarch64_k3s-master:latest
+          target: base
+          build-args: |
+            NODE=master
+      - name: Build Image
+        id: build_image
+        run: |
+          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_ubuntu-aarch64_k3s-master:latest sgnOS_ubuntu_rpi64_k3s-master.img
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_ubuntu_rpi64_k3s-master.img
+          path: sgnOS_ubuktu_rpi64_k3s-master.img
           if-no-files-found: error
