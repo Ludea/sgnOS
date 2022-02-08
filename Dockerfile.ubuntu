@@ -2,7 +2,7 @@ ARG LUET_VERSION=0.22.7
 ARG BASE_IMAGE=aubuntu
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
-FROM $BASE_IMAGE
+FROM $BASE_IMAGE as base
 ARG K3S_VERSION
 ARG C3OS_VERSION
 ARG NODE=agent
@@ -12,11 +12,9 @@ ENV COSIGN_EXPERIMENTAL=1
 # Repo containing signatures
 ENV COSIGN_REPOSITORY=raccos/releases-green
 
+RUN apt update && apt dist-upgrade -y
 RUN apt install -y \
          systemd \
-         grub-pc-bin \
-         grub-efi-amd64-bin \
-         grub2 \
          grub2-common \
          iproute2 \
          squashfs-tools \
@@ -59,3 +57,14 @@ RUN mkinitrd
 
 RUN envsubst >/etc/os-release </usr/lib/os-release.tmpl && \
     rm /usr/lib/os-release.tmpl
+
+FROM base as k3s-amd64
+RUN apt install -y \
+           grub-pc-bin
+           grub-efi-amd64-bin \
+           grub2
+
+FROM base as k3-aarch64
+RUN apt install -y \
+           grub-efi-arm64 \
+           grub-efi-arm64-bin
