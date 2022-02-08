@@ -13,7 +13,7 @@ ENV COSIGN_EXPERIMENTAL=1
 ENV COSIGN_REPOSITORY=raccos/releases-green
 
 RUN apt update && apt dist-upgrade -y
-RUN apt install -y systemd grub2-common iproute2 squashfs-tools parted dracut dracut-live e2fsprogs dosfstools coreutils multipath-tools debianutils curl nano gawk haveged tar rsync
+RUN apt install -y systemd grub2-common iproute2 squashfs-tools parted dracut e2fsprogs dosfstools coreutils multipath-tools debianutils curl nano gawk haveged tar rsync
 
 # Copy the luet config file pointing to the upgrade repository
 COPY repositories.yaml /etc/luet/luet.yaml
