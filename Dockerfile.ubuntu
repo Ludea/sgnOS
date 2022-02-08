@@ -1,5 +1,5 @@
 ARG LUET_VERSION=0.22.7
-ARG BASE_IMAGE=aubuntu
+ARG BASE_IMAGE=ubuntu
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
 FROM $BASE_IMAGE as base
