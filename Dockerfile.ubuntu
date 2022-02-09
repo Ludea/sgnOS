@@ -37,7 +37,13 @@ RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh
 RUN rm -rf installer.sh
 COPY k3s/${NODE}.yaml /
 
-RUN mkinitrd
+RUN dracut --regenerate-all -f
+RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
+    ln -sf "${kernel#/boot/}" /boot/vmlinuz
+
+RUN kernel=$(ls /lib/modules | head -n1) && \
+    cd /boot && \
+    ln -sf *.img initrd 
 
 RUN envsubst >/etc/os-release </usr/lib/os-release.tmpl && \
     rm /usr/lib/os-release.tmpl
