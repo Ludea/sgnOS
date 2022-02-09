@@ -103,7 +103,7 @@ RUN apk --no-cache add  \
 RUN rc-update add sshd
 
 # Copy the luet config file pointing to the upgrade repository
-COPY repositories.yaml /etc/luet/luet.yaml
+COPY repositories/fedora.yaml /etc/luet/luet.yaml
 
 # Copy luet from the official images
 COPY --from=luet /usr/bin/luet /usr/bin/luet
