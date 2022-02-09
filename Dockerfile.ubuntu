@@ -41,10 +41,6 @@ RUN dracut --regenerate-all -f
 RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
     ln -sf "${kernel#/boot/}" /boot/vmlinuz
 
-RUN kernel=$(ls /lib/modules | head -n1) && \
-    cd /boot && \
-    ln -sf *.img initrd 
-
 RUN envsubst >/etc/os-release </usr/lib/os-release.tmpl && \
     rm /usr/lib/os-release.tmpl
 
