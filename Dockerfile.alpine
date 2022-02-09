@@ -80,25 +80,11 @@ RUN apk --no-cache add  \
       openssh-server \
       parted \
       procps \
-      qemu-guest-agent \
       rng-tools \
       rsync \
-      strace \
-      smartmontools \
       sudo \
-      tar \
-      tzdata \
-      util-linux \
-      vim \
-      wireguard-tools \
-      wpa_supplicant \
-      xfsprogs \
-      xz \
-      open-vm-tools \
-      open-vm-tools-deploypkg \
-      open-vm-tools-guestinfo \
-      open-vm-tools-static \
-      open-vm-tools-vmbackup
+      tar 
+
 # System services
 RUN rc-update add sshd
 
