@@ -23,7 +23,8 @@ COPY repositories/ubuntu.yaml /etc/luet/luet.yaml
 # Copy luet from the official images
 COPY --from=luet /usr/bin/luet /usr/bin/luet
 
-RUN luet install --plugin luet-cosign -y \
+RUN luet install -y \
+#--plugin luet-cosign -y \
        meta/cos-verify \
        meta/cos-core \
        utils/k9s \
