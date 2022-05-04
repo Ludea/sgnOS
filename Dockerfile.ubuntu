@@ -1,4 +1,4 @@
-ARG LUET_VERSION=0.22.7
+ARG LUET_VERSION=0.32.0
 ARG BASE_IMAGE=ubuntu
 FROM quay.io/luet/base:$LUET_VERSION AS luet
 
@@ -7,7 +7,6 @@ ARG K3S_VERSION
 ARG C3OS_VERSION
 ARG NODE=agent
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/Paris
 
 # Enable cosign keyless verify
 ENV COSIGN_EXPERIMENTAL=1
@@ -24,12 +23,14 @@ COPY repositories/ubuntu.yaml /etc/luet/luet.yaml
 COPY --from=luet /usr/bin/luet /usr/bin/luet
 
 RUN luet install -y \
-#--plugin luet-cosign -y \
-       meta/cos-verify \
        meta/cos-core \
+       utils/edgevpn \
+       cloud-config/recovery \
+       cloud-config/live \
+       cloud-config/rootfs \
+       cloud-config/network \
        utils/k9s \
-       system/kernel \
-       system/dracut-initrd
+       utils/nerdctl && luet cleanup
 
 COPY files/ /
 
