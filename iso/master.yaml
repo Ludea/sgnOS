@@ -1,18 +1,19 @@
 packages:
-  rootfs:
-  - system/sgnOS
   uefi:
-  - live/systemd-boot
-  - live/boot
+  - live/grub2-efi-image
   isoimage:
-  - live/syslinux
-  - live/boot
+  - live/grub2
+  - live/grub2-efi-image
+
+boot_file: "boot/x86_64/loader/eltorito.img"
+boot_catalog: "boot/x86_64/boot.catalog" 
+isohybrid_mbr: "boot/x86_64/loader/boot_hybrid.img"
 
 initramfs:
   kernel_file: "vmlinuz"
   rootfs_file: "initrd"
 
-image_prefix: "sgnOS_k3s-master"
+image_prefix: "sgnOS_k3s-"
 image_date: false
 label: "COS_LIVE"
 
