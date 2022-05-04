@@ -24,13 +24,11 @@ COPY --from=luet /usr/bin/luet /usr/bin/luet
 
 RUN luet install -y \
        meta/cos-core \
-       utils/edgevpn \
        cloud-config/recovery \
        cloud-config/live \
        cloud-config/rootfs \
        cloud-config/network \
-       utils/k9s \
-       utils/nerdctl && luet cleanup
+       utils/k9s && luet cleanup
 
 COPY files/ /
 
