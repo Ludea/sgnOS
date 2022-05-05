@@ -19,6 +19,7 @@ RUN apt install -y \
          grub2-common \
          iproute2 \
          squashfs-tools \
+         openssh-server \
          parted \
          dracut \
          dracut-network \
