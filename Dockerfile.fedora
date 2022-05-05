@@ -65,6 +65,9 @@ COPY k3s/${NODE}.yaml /
 #    cd /boot && \
 #    ln -sf *.img initrd
 
+RUN envsubst >/etc/os-release </usr/lib/os-release.tmpl && \
+    rm /usr/lib/os-release.tmpl
+
 FROM base as k3s-amd64
 RUN dnf install -y \ 
          grub2-pc \
