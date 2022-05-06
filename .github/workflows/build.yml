@@ -19,6 +19,8 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Set up elemental 
         uses: ludea/elemental-setup@v1.10
+      - name: try elemental 
+        run: elemental
       - name: Build master-amd64
         uses: docker/build-push-action@v2
         with:
