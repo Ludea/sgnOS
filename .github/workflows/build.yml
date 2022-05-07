@@ -122,7 +122,7 @@ jobs:
           build-args: |
             NODE=agent
       - name: Build fedora agent amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_fedora_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_fedora_amd64_k3s-agent.iso
@@ -152,7 +152,7 @@ jobs:
           build-args: |
             NODE=agent
       - name: Build Ubuntu agent amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_ubuntu_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_ubuntu_amd64_k3s-agent.iso
