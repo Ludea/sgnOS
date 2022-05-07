@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-fedora_amd64:
+  build-fedora-amd64:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
           path: sgnOS_fedora_amd64_k3s.iso
           if-no-files-found: error
 
-  build-ubuntu_amd64:
+  build-ubuntu-amd64:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
