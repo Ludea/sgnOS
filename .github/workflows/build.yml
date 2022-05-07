@@ -159,7 +159,7 @@ jobs:
           path: sgnOS_ubuntu_amd64_k3s-agent.iso
           if-no-files-found: error
 
-  build-arm64-master:
+  build-fedora-arm64-master:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -169,6 +169,8 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Set up elemental 
+        uses: ludea/elemental-setup@v1.10
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -181,21 +183,21 @@ jobs:
           platforms: linux/arm64
           push: false
           load: true
-          tags: sgnos_aarch64_k3s-master:latest
+          tags: sgnos_fedora_aarch64_k3s-master:latest
           target: base
           build-args: |
             NODE=master
       - name: Build Image
         id: build_image
         run: |
-          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_aarch64_k3s-master:latest sgnOS_rpi64_k3s-master.img
+          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_fedora_aarch64_k3s-master:latest sgnOS_rpi64_fedora_k3s-master.img
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_rpi64_k3s-master.img
           path: sgnOS_rpi64_k3s-master.img
           if-no-files-found: error
 
-  build-arm64-agent:
+  build-fedora-arm64-agent:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -205,6 +207,8 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Set up elemental 
+        uses: ludea/elemental-setup@v1.10
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -217,7 +221,7 @@ jobs:
           platforms: linux/arm64
           push: false
           load: true
-          tags: sgnos_aarch64_k3s-agent:latest
+          tags: sgnos_fedora_aarch64_k3s-agent:latest
           target: base
           build-args: |
             NODE=agent
@@ -225,7 +229,7 @@ jobs:
         id: build_image
         run: |
           mkdir build
-          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_aarch64_k3s-agent:latest sgnOS_rpi64_k3s-agent.img
+          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_fedora_aarch64_k3s-agent:latest sgnOS_fedora_rpi64_k3s-agent.img
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_rpi64_k3s-agent.img
@@ -242,6 +246,8 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Set up elemental 
+        uses: ludea/elemental-setup@v1.10
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
