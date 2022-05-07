@@ -158,6 +158,36 @@ jobs:
           name: sgnOS_ubuntu_amd64_k3s-agent.iso
           path: sgnOS_ubuntu_amd64_k3s-agent.iso
           if-no-files-found: error
+  
+  build-alpine-amd64-agent:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+      - name: Release space from worker
+        run: |
+          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Build alpine agent-amd64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile.alpine
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: sgnos_alpine_amd64_k3s-agent:latest
+          target: k3s-amd64
+          build-args: |
+            NODE=agent
+      - name: Build alpine agent amd64 iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_alpine_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_alpine_amd64_k3s-agent.iso
+          path: sgnOS_alpine_amd64_k3s-agent.iso
+          if-no-files-found: error
 
   build-fedora-arm64-master:
     runs-on: ubuntu-latest
