@@ -178,7 +178,6 @@ jobs:
           push: false
           load: true
           tags: sgnos_alpine_amd64_k3s-agent:latest
-          target: k3s-amd64
           build-args: |
             NODE=agent
       - name: Build alpine agent amd64 iso
