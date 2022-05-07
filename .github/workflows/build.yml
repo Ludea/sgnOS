@@ -19,9 +19,7 @@ jobs:
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
       - name: Set up elemental 
         uses: ludea/elemental-setup@v1.10
-      - name: try elemental 
-        run: elemental
-      - name: Build master-amd64
+      - name: Build Fedora master-amd64
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -33,7 +31,7 @@ jobs:
           target: k3s-amd64
           build-args: |
             NODE=master
-      - name: Build master amd64 iso
+      - name: Build Fedora master amd64 iso
         run: sudo elemental build-iso sgnos_fedora_amd64_k3s-master:latest 
 #docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_fedora_amd64_k3s-master:latest --output sgnOS_fedora_amd64_k3s-master
       - uses: actions/upload-artifact@v2
@@ -52,11 +50,7 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build master-amd64
+      - name: Build Ubuntu master-amd64
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -68,7 +62,7 @@ jobs:
           target: k3s-amd64
           build-args: |
             NODE=master
-      - name: Build master amd64 iso
+      - name: Build Ubuntu master amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_ubuntu_amd64_k3s-master:latest --output sgnOS_ubuntu_amd64_k3s-master
       - uses: actions/upload-artifact@v2
         with:
@@ -86,11 +80,7 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Build master-amd64
+     - name: Build alpine master-amd64
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -101,7 +91,7 @@ jobs:
           tags: sgnos_alpine_amd64_k3s-master:latest
           build-args: |
             NODE=master
-      - name: Build master amd64 iso
+      - name: Build alpine master amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_alpine_amd64_k3s-master:latest --output sgnOS_alpine_amd64_k3s-master
       - uses: actions/upload-artifact@v2
         with:
@@ -109,7 +99,7 @@ jobs:
           path: sgnOS_alpine_amd64_k3s-master.iso
           if-no-files-found: error
 
-  build-amd64-agent:
+  build-fedora-amd64-agent:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
@@ -119,10 +109,6 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
       - name: Build agent-amd64
         uses: docker/build-push-action@v2
         with:
@@ -131,16 +117,46 @@ jobs:
           platforms: linux/amd64
           push: false
           load: true
-          tags: sgnos_amd64_k3s-agent:latest
+          tags: sgnos_fedora_amd64_k3s-agent:latest
           target: k3s-amd64
           build-args: |
             NODE=agent
-      - name: Build agent amd64 iso
+      - name: Build fedora agent amd64 iso
         run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_amd64_k3s-agent.iso
-          path: sgnOS_amd64_k3s-agent.iso
+          name: sgnOS_fedora_amd64_k3s-agent.iso
+          path: sgnOS_fedora_amd64_k3s-agent.iso
+          if-no-files-found: error
+
+  build-ubuntu-amd64-agent:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+      - name: Release space from worker
+        run: |
+          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+      - name: Build Ubuntu agent-amd64
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile.Ubuntu
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: sgnos_ubuntu_amd64_k3s-agent:latest
+          target: k3s-amd64
+          build-args: |
+            NODE=agent
+      - name: Build Ubuntu agent amd64 iso
+        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_amd64_k3s-agent:latest --output sgnOS_amd64_k3s-agent
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sgnOS_ubuntu_amd64_k3s-agent.iso
+          path: sgnOS_ubuntu_amd64_k3s-agent.iso
           if-no-files-found: error
 
   build-arm64-master:
