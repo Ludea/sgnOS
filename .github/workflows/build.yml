@@ -161,16 +161,16 @@ jobs:
           platforms: linux/arm64
           push: false
           load: true
-          tags: sgnos_ubuntu-aarch64_k3s-master:latest
+          tags: sgnos_ubuntu-aarch64_k3s:latest
           target: base
           build-args: |
             NODE=master
       - name: Build Image
         id: build_image
         run: |
-          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_ubuntu-aarch64_k3s-master:latest sgnOS_ubuntu_rpi64_k3s-master.img
+          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_ubuntu_aarch64_k3s:latest sgnOS_ubuntu_rpi64_k3s.img
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_ubuntu_rpi64_k3s-master.img
-          path: sgnOS_ubuktu_rpi64_k3s-master.img
+          name: sgnOS_ubuntu_rpi64_k3s.img
+          path: sgnOS_ubuntu_rpi64_k3s.img
           if-no-files-found: error
