@@ -34,7 +34,8 @@ jobs:
           build-args: |
             NODE=master
       - name: Build master amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_fedora_amd64_k3s-master:latest --output sgnOS_fedora_amd64_k3s-master
+        run: elemental build-Iso sgnos_fedora_amd64_k3s-master:latest 
+#docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_fedora_amd64_k3s-master:latest --output sgnOS_fedora_amd64_k3s-master
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_fedora_amd64_k3s-master.iso
