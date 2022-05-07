@@ -9,6 +9,3 @@ stages:
        systemctl:
          start: 
          - k3s
-     - commands:
-       - |
-            chmod 600 /etc/systemd/system/k3s.service.env
