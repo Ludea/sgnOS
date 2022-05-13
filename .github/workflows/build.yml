@@ -129,7 +129,7 @@ jobs:
             NODE=master
       - name: Build Image
         id: build_image
-        run: elemental build-iso -a arm64 sgnos_fedora_arm64_k3s:latest 
+        run: sudo elemental build-iso -a arm64 sgnos_fedora_arm64_k3s:latest 
   #        sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_fedora_arm64_k3s:latest sgnOS_rpi_fedora_k3s.img
       - uses: actions/upload-artifact@v2
         with:
