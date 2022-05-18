@@ -29,8 +29,6 @@ jobs:
           load: true
           tags: sgnos_fedora_amd64_k3s:latest
           target: k3s-amd64
-          build-args: |
-            NODE=master
       - name: Build Fedora master amd64 iso
         run: |
           sudo elemental build-iso --local sgnos_fedora_amd64_k3s:latest --output sgnOS_fedora_amd64_k3s.iso 
@@ -63,11 +61,8 @@ jobs:
           load: true
           tags: sgnos_ubuntu_amd64_k3s:latest
           target: k3s-amd64
-          build-args: |
-            NODE=master
       - name: Build Ubuntu amd64 iso
-        run: sudo elemental build-iso --local sgnos_ubuntu_amd64_k3s:latest --output sgnOS_ubuntu_amd64_k3s 
-#docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_ubuntu_amd64_k3s:latest --output sgnOS_ubuntu_amd64_k3s
+        run: sudo elemental build-iso --local sgnos_ubuntu_amd64_k3s:latest --output sgnOS_ubuntu_amd64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_ubuntu_amd64_k3s.iso
@@ -93,10 +88,8 @@ jobs:
           push: false
           load: true
           tags: sgnos_alpine_amd64_k3s:latest
-          build-args: |
-            NODE=master
       - name: Build alpine amd64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_alpine_amd64_k3s:latest --output sgnOS_alpine_amd64_k3s
+        run: sudo elemental build-iso --local sgnos_alpine_amd64_k3s:latest --output sgnos_alpine_amd64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_alpine_amd64_k3s.iso
@@ -129,16 +122,13 @@ jobs:
           load: true
           tags: sgnos_fedora_arm64_k3s:latest
           target: base
-          build-args: |
-            NODE=master
       - name: Build Image
         id: build_image
-        run: sudo elemental build-iso --local -a arm64 sgnos_fedora_arm64_k3s:latest 
-  #        sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_fedora_arm64_k3s:latest sgnOS_rpi_fedora_k3s.img
+        run: sudo elemental build-iso --local -a arm64 sgnos_fedora_arm64_k3s:latest --output sgnos_fedora_amd64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_rpi_k3s.img
-          path: sgnOS_rpi_k3s.img
+          name: sgnOS_rpi_k3s.iso
+          path: sgnOS_rpi_k3s.iso
           if-no-files-found: error
 
   build-ubuntu-arm64:
@@ -167,16 +157,13 @@ jobs:
           load: true
           tags: sgnos_ubuntu-arm64_k3s:latest
           target: base
-          build-args: |
-            NODE=master
       - name: Build Image
         id: build_image
-        run: |
-          sudo ./images/arm-img-builder.sh --model rpi64 --docker-image sgnos_ubuntu_arm64_k3s:latest sgnOS_ubuntu_rpi64_k3s.img
+        run: sudo elemental build-iso --local -a arm64 sgnos_ubuntu_arm64_k3s:latest --output sgnos_ubuntu_amd64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_ubuntu_rpi_k3s.img
-          path: sgnOS_ubuntu_rpi_k3s.img
+          name: sgnOS_ubuntu_rpi_k3s.iso
+          path: sgnOS_ubuntu_rpi_k3s.iso
           if-no-files-found: error
 
   build-alpine-arm64:
@@ -198,10 +185,8 @@ jobs:
           push: false
           load: true
           tags: sgnos_alpine_arm64_k3s:latest
-          build-args: |
-            NODE=master
       - name: Build alpine arm64 iso
-        run: docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_alpine_arm64_k3s:latest --output sgnOS_alpine_rpi_k3s
+        run: sudo elemental build-iso --local -a arm64 sgnos_alpine_arm64_k3s:latest --output sgnos_alpine_amd64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_alpine_arm64_k3s.iso
