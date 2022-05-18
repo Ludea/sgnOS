@@ -20,7 +20,7 @@ jobs:
       - name: Set up elemental 
         uses: ludea/elemental-setup@dev
       - name: Install deps 
-        run: sudo apt install -y mcopy
+        run: sudo apt install -y mtools
       - name: Build Fedora master-amd64
         uses: docker/build-push-action@v2
         with:
