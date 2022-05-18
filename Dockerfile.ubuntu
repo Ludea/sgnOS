@@ -52,7 +52,6 @@ COPY files/ /
 RUN curl -sfL https://get.k3s.io > installer.sh
 RUN INSTALL_K3S_SKIP_START="true" INSTALL_K3S_SKIP_ENABLE="true" sh installer.sh ${NODE}
 RUN rm -rf installer.sh
-COPY k3s/${NODE}.yaml /
 
 #RUN kernel=$(ls /boot/vmlinuz-* | head -n1) && \
 #    ln -sf "${kernel#/boot/}" /boot/vmlinuz
