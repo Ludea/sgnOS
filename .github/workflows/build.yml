@@ -33,7 +33,7 @@ jobs:
             NODE=master
       - name: Build Fedora master amd64 iso
         run: |
-          sudo elemental build-iso --local sgnos_fedora_amd64_k3s:latest 
+          sudo elemental build-iso --local sgnos_fedora_amd64_k3s:latest--output sgnOS_fedora_amd64_k3s   
           ls
       - uses: actions/upload-artifact@v2
         with:
@@ -66,7 +66,7 @@ jobs:
           build-args: |
             NODE=master
       - name: Build Ubuntu amd64 iso
-        run: sudo elemental build-iso --local  sgnos_ubuntu_amd64_k3s:latest
+        run: sudo elemental build-iso --local sgnos_ubuntu_amd64_k3s:latest --output sgnOS_ubuntu_amd64_k3s 
 #docker run -v $PWD:/cOS -v /var/run:/var/run --entrypoint /usr/bin/luet-makeiso -i --rm quay.io/costoolkit/toolchain:0.8.7-16-gdcaac339 ./iso/master.yaml --image sgnos_ubuntu_amd64_k3s:latest --output sgnOS_ubuntu_amd64_k3s
       - uses: actions/upload-artifact@v2
         with:
