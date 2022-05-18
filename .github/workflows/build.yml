@@ -33,7 +33,7 @@ jobs:
             NODE=master
       - name: Build Fedora master amd64 iso
         run: |
-          sudo elemental build-iso --local sgnos_fedora_amd64_k3s:latest--output sgnOS_fedora_amd64_k3s   
+          sudo elemental build-iso --local sgnos_fedora_amd64_k3s:latest --output sgnOS_fedora_amd64_k3s   
           ls
       - uses: actions/upload-artifact@v2
         with:
