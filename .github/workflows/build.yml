@@ -157,7 +157,7 @@ jobs:
           platforms: linux/arm64
           push: false
           load: true
-          tags: sgnos_ubuntu-arm64_k3s:latest
+          tags: sgnos_ubuntu_arm64_k3s:latest
           target: base
       - name: Build Image
         id: build_image
