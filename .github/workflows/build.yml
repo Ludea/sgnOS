@@ -126,11 +126,11 @@ jobs:
           target: base
       - name: Build Image
         id: build_image
-        run: sudo elemental build-iso --local -a arm64 sgnos_fedora_arm64_k3s:latest --output sgnos_fedora_amd64_k3s.iso
+        run: sudo elemental build-iso --local -a arm64 sgnos_fedora_arm64_k3s:latest --output sgnos_fedora_arm4_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_rpi_k3s.iso
-          path: sgnOS_rpi_k3s.iso
+          name: sgnOS_fedora_arm64_k3s.iso
+          path: sgnOS_fedora_arm64_k3s.iso
           if-no-files-found: error
 
   build-ubuntu-arm64:
@@ -161,11 +161,11 @@ jobs:
           target: base
       - name: Build Image
         id: build_image
-        run: sudo elemental build-iso --local -a arm64 sgnos_ubuntu_arm64_k3s:latest --output sgnos_ubuntu_amd64_k3s.iso
+        run: sudo elemental build-iso --local -a arm64 sgnos_ubuntu_arm64_k3s:latest --output sgnos_ubuntu_arm64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_ubuntu_rpi_k3s.iso
-          path: sgnOS_ubuntu_rpi_k3s.iso
+          name: sgnOS_ubuntu_arm64_k3s.iso
+          path: sgnOS_ubuntu_arm64_k3s.iso
           if-no-files-found: error
 
   build-alpine-arm64:
@@ -190,10 +190,9 @@ jobs:
           load: true
           tags: sgnos_alpine_arm64_k3s:latest
       - name: Build alpine arm64 iso
-        run: sudo elemental build-iso --local -a arm64 sgnos_alpine_arm64_k3s:latest --output sgnos_alpine_amd64_k3s.iso
+        run: sudo elemental build-iso --local -a arm64 sgnos_alpine_arm64_k3s:latest --output sgnos_alpine_arm64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
           name: sgnOS_alpine_arm64_k3s.iso
           path: sgnOS_alpine_arm64_k3s.iso
           if-no-files-found: error
-
