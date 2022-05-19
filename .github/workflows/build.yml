@@ -94,8 +94,8 @@ jobs:
         run: sudo elemental build-iso --local sgnos_alpine_amd64_k3s:latest --output sgnos_alpine_amd64_k3s.iso
       - uses: actions/upload-artifact@v2
         with:
-          name: sgnOS_alpine_amd64_k3s.iso
-          path: sgnOS_alpine_amd64_k3s.iso
+          name: sgnos_alpine_amd64_k3s.iso
+          path: sgnos_alpine_amd64_k3s.iso
           if-no-files-found: error
 
   build-fedora-arm64:
